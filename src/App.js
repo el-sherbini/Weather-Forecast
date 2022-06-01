@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CountryWeather, CityWeather } from "./pages";
-import { Sidebar } from "./components";
+import { Navbar } from "./components";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getCountry, getCityWeather } from "./store/weatherSlice";
 import "./App.scss";
 
 function App() {
-  const { isLoading, country, city, countryCities } = useSelector(
-    (state) => state.weather
-  );
+  const { isLoading, country, city } = useSelector((state) => state.weather);
 
   const dispatch = useDispatch();
 
@@ -47,12 +45,12 @@ function App() {
   }, [latitude, longitude, country]);
 
   return (
-    <div>
+    <div className="w-5/6 m-auto">
       {isLoading ? (
         <div>Loading...</div>
       ) : (
         <Router>
-          {/* <Sidebar /> */}
+          <Navbar />
           <Routes>
             <Route index element={<CountryWeather />} />
             <Route path="/:city" element={<CityWeather />} />

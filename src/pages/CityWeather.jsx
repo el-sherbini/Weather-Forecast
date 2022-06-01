@@ -1,7 +1,13 @@
 import React from "react";
+import { WeatherData } from "../components";
 
 const CityWeather = () => {
-  return <div>CityWeather</div>;
+  return (
+    <div>
+      <WeatherData />
+      {/* <BarChart chartData={weatherData} /> */}
+    </div>
+  );
 };
 
 export default CityWeather;

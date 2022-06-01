@@ -1,10 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { getCityWeather } from "../store/weatherSlice";
 
 const Navbar = () => {
   const { countryCities } = useSelector((state) => state.weather);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    navigate(`/${e.target.value}`);
+    dispatch(getCityWeather({ city: e.target.value }));
+  };
 
   return (
     <nav className="flex justify-between pt-4">
@@ -17,7 +24,7 @@ const Navbar = () => {
           className="w-full rounded border border-solid border-gray-300 bg-no-repeat
           px-2 py-1 text-sm font-normal text-gray-700 transition duration-300 ease-in-out
           focus:border-gray-800 focus:outline-none"
-          onChange={(e) => navigate(`/${e.target.value}`)}
+          onChange={handleChange}
         >
           <option
             defaultValue
@@ -36,11 +43,7 @@ const Navbar = () => {
         <Link
           className="ml-2 mt-1 rounded bg-transparent font-semibold text-gray-700"
           to="/dashboard"
-        >
-          {/* <button onClick={() => changeCity(city ? city : defaultCityValue)}>
-            <FaSearch />
-          </button> */}
-        </Link>
+        ></Link>
       </div>
     </nav>
   );

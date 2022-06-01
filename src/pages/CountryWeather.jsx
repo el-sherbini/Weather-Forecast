@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BarChart, CityWeather, Navbar } from "../components";
+import { BarChart, WeatherData } from "../components";
 import { useSelector } from "react-redux";
 
 const CountryWeather = () => {
@@ -34,9 +34,8 @@ const CountryWeather = () => {
   }, [hourly]);
 
   return (
-    <div className="w-5/6 m-auto">
-      <Navbar />
-      <CityWeather />
+    <div>
+      <WeatherData />
       <BarChart chartData={weatherData} />
     </div>
   );

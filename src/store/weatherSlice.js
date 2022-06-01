@@ -5,7 +5,7 @@ export const getCountry = createAsyncThunk(
   async (args) => {
     try {
       return fetch(
-        `http://api.worldweatheronline.com/premium/v1/search.ashx?q=${args.latitude},${args.longitude}&num_of_results=30&key=80baa668310b4929a81193903222605&format=json`
+        `http://api.worldweatheronline.com/premium/v1/search.ashx?q=${args.latitude},${args.longitude}&num_of_results=50&key=80baa668310b4929a81193903222605&format=json`
       ).then((res) => res.json());
     } catch (err) {
       console.log(err);
@@ -19,6 +19,19 @@ export const getCityWeather = createAsyncThunk(
     try {
       return fetch(
         `http://api.worldweatheronline.com/premium/v1/weather.ashx?q=${args.city}&num_of_days=1&includelocation=yes&tp=1&key=80baa668310b4929a81193903222605&format=json`
+      ).then((res) => res.json());
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const getCityHistoryWeather = createAsyncThunk(
+  "weather/getCityHistoryWeather",
+  async (args) => {
+    try {
+      return fetch(
+        `http://api.worldweatheronline.com/premium/v1/past-weather.ashx?q=${args.city}&date=${args.startDate}&enddate=${args.endDate}&tp=1&key=80baa668310b4929a81193903222605&format=json`
       ).then((res) => res.json());
     } catch (err) {
       console.log(err);
@@ -87,6 +100,19 @@ const weatherSlice = createSlice({
     },
     [getCityWeather.rejected]: (state, action) => {
       state.isLoading = false;
+    },
+
+    [getCityHistoryWeather.pending]: (state, action) => {
+      state.isLoading = true;
+      console.log(action);
+    },
+    [getCityHistoryWeather.fulfilled]: (state, action) => {
+      console.log(action);
+      state.isLoading = false;
+    },
+    [getCityHistoryWeather.rejected]: (state, action) => {
+      state.isLoading = false;
+      console.log(action);
     },
   },
 });
