@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { BarChart, WeatherData } from "../components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getCityWeather } from "../store/weatherSlice";
 
 const CountryWeather = () => {
   const [weatherData, setWeatherData] = useState({});
-  const { hourly } = useSelector((state) => state.weather);
+  const { city, country, hourly } = useSelector((state) => state.weather);
+
+  const dispatch = useDispatch();
 
   const convertTime = (time) => {
     const period = time >= 12 ? "pm" : "am";
@@ -14,24 +17,32 @@ const CountryWeather = () => {
   };
 
   useEffect(() => {
+    if (country && city === null) {
+      dispatch(getCityWeather({ city: country }));
+    }
+  }, []);
+
+  useEffect(() => {
     setWeatherData({
-      labels: hourly?.map((data, index) => convertTime(index)),
+      labels: hourly?.map((data) => convertTime(data.time / 100)),
       datasets: [
         {
           label: "Temperature (°C) during day",
           data: hourly?.map((data) => data?.tempC),
-          backgroundColor: ["#B72EF2"],
-          borderWidth: 0,
-          hoverBorderColor: ["white"],
-          hoverBorderWidth: 1,
+          backgroundColor: ["rgba(54, 162, 235, 0.95)"],
+          borderWidth: 3,
+          borderColor: ["white"],
+          hoverBorderColor: ["rgba(54, 162, 235, 1)"],
+          hoverBorderWidth: 2,
         },
         {
           label: "Temperature (°F) during day",
           data: hourly?.map((data) => data?.tempF),
-          backgroundColor: [" #5C82F2"],
-          borderWidth: 0,
-          hoverBorderColor: ["white"],
-          hoverBorderWidth: 1,
+          backgroundColor: ["rgba(255, 99, 132, 0.95)"],
+          borderWidth: 3,
+          borderColor: ["#fff"],
+          hoverBorderColor: ["rgba(255, 99, 132, 1)"],
+          hoverBorderWidth: 2,
         },
       ],
     });

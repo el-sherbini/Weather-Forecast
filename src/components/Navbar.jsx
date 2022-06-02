@@ -9,8 +9,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    navigate(`/${e.target.value}`);
     dispatch(getCityWeather({ city: e.target.value }));
+    navigate(`/${e.target.value}`);
   };
 
   const handleClick = (e) => {

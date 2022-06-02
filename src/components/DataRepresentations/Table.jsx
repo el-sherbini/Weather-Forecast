@@ -3,10 +3,10 @@ import * as d3 from "d3";
 import { useDispatch, useSelector } from "react-redux";
 import { getCityHistoryWeather } from "../../store/weatherSlice";
 
-const Table = () => {
-  const { cityHistoryWeather, city, country } = useSelector(
-    (state) => state.weather
-  );
+const Table = ({ cityHistoryWeather }) => {
+  // const { cityHistoryWeather, city, country } = useSelector(
+  //   (state) => state.weather
+  // );
 
   const dispatch = useDispatch();
 
@@ -17,20 +17,19 @@ const Table = () => {
   const tableHeaders = ["Date", "Max Temp (°C)", "Min Temp (°C)"];
 
   useEffect(() => {
-    if (city) {
-      dispatch(
-        getCityHistoryWeather({
-          city: city ? city : country,
-          startDate: lastWeek.toISOString().slice(0, 10),
-          endDate: today,
-        })
-      );
-    }
+    // if (city) {
+    //   dispatch(
+    //     getCityHistoryWeather({
+    //       city: city ? city : country,
+    //       startDate: lastWeek.toISOString().slice(0, 10),
+    //       endDate: today,
+    //     })
+    //   );
+    // }
 
-    console.log(cityHistoryWeather, city, country);
     if (cityHistoryWeather)
       DrawTable(cityHistoryWeather, ["date", "maxtempC", "mintempC"]);
-  }, [city]);
+  }, [cityHistoryWeather]);
 
   const DrawTable = (data, columns) => {
     d3.selectAll("table").remove();
@@ -44,7 +43,7 @@ const Table = () => {
     let thead = table
       .append("thead")
       .attr("class", "bg-[#515ec5] text-sm text-white");
-    let tbody = table.append("tbody").attr("class", "bg-gray-200");
+    let tbody = table.append("tbody").attr("class", "bg-slate-200");
     let rows = tbody.selectAll("tr").data(data).enter().append("tr");
 
     thead

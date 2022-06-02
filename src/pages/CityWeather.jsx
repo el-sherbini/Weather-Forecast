@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { LineChart, Table, WeatherData } from "../components";
+import { getCityHistoryWeather, getCityWeather } from "../store/weatherSlice";
 
 const CityWeather = () => {
   const [weatherData, setWeatherData] = useState({});
   const { climateAverage } = useSelector((state) => state.weather);
+
+  const { city, country, cityHistoryWeather } = useSelector(
+    (state) => state.weather
+  );
+
+  const cityName = useParams().city;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setWeatherData({
@@ -13,18 +22,18 @@ const CityWeather = () => {
         {
           label: "Avg Temperature (°C)",
           data: climateAverage?.map((data) => data?.absMaxTemp),
-          backgroundColor: ["#B72EF2"],
-          borderWidth: 1,
-          borderColor: ["#B72EF2"],
+          backgroundColor: ["rgba(255, 99, 132, 1)"],
+          borderWidth: 2,
+          borderColor: ["rgba(255, 99, 132, 0.5)"],
           hoverBackgroundColor: ["white"],
           hoverBorderWidth: 2,
         },
         {
           label: "Avg Temperature (°F)",
           data: climateAverage?.map((data) => data?.absMaxTemp_F),
-          backgroundColor: [" #5C82F2"],
-          borderWidth: 1,
-          borderColor: ["#5C82F2"],
+          backgroundColor: ["rgba(54, 162, 235, 1)"],
+          borderWidth: 2,
+          borderColor: ["rgba(54, 162, 235, 0.5)"],
           hoverBackgroundColor: ["white"],
           hoverBorderWidth: 2,
         },
@@ -32,10 +41,30 @@ const CityWeather = () => {
     });
   }, [climateAverage]);
 
+  const today = new Date().toISOString().slice(0, 10);
+  const lastWeek = new Date();
+  lastWeek.setDate(lastWeek.getDate() - 6);
+
+  useEffect(() => {
+    if (country && city === null) {
+      dispatch(getCityWeather({ city: cityName }));
+    }
+
+    if (city) {
+      dispatch(
+        getCityHistoryWeather({
+          city: cityName,
+          startDate: lastWeek.toISOString().slice(0, 10),
+          endDate: today,
+        })
+      );
+    }
+  }, []);
+
   return (
     <div>
       <WeatherData />
-      <Table />
+      {cityHistoryWeather && <Table cityHistoryWeather={cityHistoryWeather} />}
       <LineChart chartData={weatherData} />
     </div>
   );

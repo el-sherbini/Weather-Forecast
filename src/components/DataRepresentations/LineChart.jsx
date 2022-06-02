@@ -44,7 +44,7 @@ function LineChart({ chartData }) {
   };
 
   return (
-    <div className="w-full lg:h-72 md:h-56 sm:h-64">
+    <div className="w-full lg:h-72 md:h-56 sm:h-64 bg-slate-200 p-4 rounded-lg">
       {chartData.labels && <Line data={chartData} options={options} />}
     </div>
   );

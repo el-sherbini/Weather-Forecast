@@ -1,24 +1,32 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const getCountry = createAsyncThunk(
-  "weather/getCountry",
+export const getLocation = createAsyncThunk(
+  "weather/getLocation",
   async (args) => {
     try {
-      return fetch(
-        `http://api.worldweatheronline.com/premium/v1/search.ashx?q=${args.latitude},${args.longitude}&popular=yes&num_of_results=50&key=80baa668310b4929a81193903222605&format=json`
-      ).then((res) => res.json());
+      return fetch(`http://ip-api.com/json`).then((res) => res.json());
     } catch (err) {
       console.log(err);
     }
   }
 );
 
+export const getCities = createAsyncThunk("weather/getCities", async (args) => {
+  try {
+    return fetch(
+      `http://api.worldweatheronline.com/premium/v1/search.ashx?q=${args.query}&popular=yes&num_of_results=50&key=80baa668310b4929a81193903222605&format=json`
+    ).then((res) => res.json());
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export const getCityWeather = createAsyncThunk(
   "weather/getCityWeather",
   async (args) => {
     try {
       return fetch(
-        `http://api.worldweatheronline.com/premium/v1/weather.ashx?q=${args.city}&num_of_days=1&includelocation=yes&tp=1&key=80baa668310b4929a81193903222605&format=json`
+        `http://api.worldweatheronline.com/premium/v1/weather.ashx?q=${args.city}&num_of_days=1&includelocation=yes&tp=3&key=80baa668310b4929a81193903222605&format=json`
       ).then((res) => res.json());
     } catch (err) {
       console.log(err);
@@ -40,6 +48,9 @@ export const getCityHistoryWeather = createAsyncThunk(
 );
 
 const initialState = {
+  locationIp: null,
+  country: null,
+
   temp_C: null,
   humidity: null,
   windspeedKmph: null,
@@ -49,7 +60,6 @@ const initialState = {
   sunrise: null,
 
   city: null,
-  country: null,
 
   countryCities: null,
 
@@ -62,16 +72,28 @@ const weatherSlice = createSlice({
   name: "weather",
   initialState,
   extraReducers: {
-    [getCountry.pending]: (state, action) => {
+    [getLocation.pending]: (state, action) => {
       state.isLoading = true;
     },
-    [getCountry.fulfilled]: (state, action) => {
+    [getLocation.fulfilled]: (state, action) => {
+      state.ip = action.payload.query;
+      state.country = action.payload.country;
+      console.log(action);
+    },
+    [getLocation.rejected]: (state, action) => {
+      console.log(action);
+    },
+
+    [getCities.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [getCities.fulfilled]: (state, action) => {
       console.log(action);
       state.isLoading = false;
-      state.country = action.payload.search_api.result[0].country[0].value;
+      // state.country = action.payload.search_api.result[0].country[0].value;
       state.countryCities = action.payload.search_api.result;
     },
-    [getCountry.rejected]: (state, action) => {
+    [getCities.rejected]: (state, action) => {
       state.isLoading = false;
     },
 
@@ -81,7 +103,6 @@ const weatherSlice = createSlice({
     [getCityWeather.fulfilled]: (state, action) => {
       console.log(action);
       state.isLoading = false;
-
       state.temp_C = action.payload.data.current_condition[0].temp_C;
       state.humidity = action.payload.data.current_condition[0].humidity;
       state.windspeedKmph =
@@ -91,9 +112,7 @@ const weatherSlice = createSlice({
       state.hourly = action.payload.data.weather[0].hourly;
       state.sunrise = action.payload.data.weather[0].astronomy[0].sunrise;
       state.sunset = action.payload.data.weather[0].astronomy[0].sunset;
-
       state.city = action.payload.data.nearest_area[0].areaName[0].value;
-
       state.climateAverage = action.payload.data.ClimateAverages[0].month;
     },
     [getCityWeather.rejected]: (state, action) => {
@@ -108,7 +127,7 @@ const weatherSlice = createSlice({
       state.cityHistoryWeather = action.payload.data.weather;
     },
     [getCityHistoryWeather.rejected]: (state, action) => {
-      state.isRendered = false;
+      console.log(action);
     },
   },
 });
