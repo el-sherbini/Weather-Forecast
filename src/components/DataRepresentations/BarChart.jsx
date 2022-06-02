@@ -45,8 +45,15 @@ const BarChart = ({ chartData }) => {
   };
 
   return (
-    <div className="w-full lg:h-80 md:h-56 sm:h-36">
-      {chartData.labels && <Bar data={chartData} options={options} />}
+    <div className="w-full  bg-slate-200 p-4 rounded-lg">
+      <h1 className="sm:text-2xl font-bold text-center mb-4">
+        City temperature during day
+      </h1>
+      {chartData.labels && (
+        <div className="lg:h-80 h-48">
+          <Bar data={chartData} options={options} />
+        </div>
+      )}
     </div>
   );
 };

@@ -20,7 +20,7 @@ const CityWeather = () => {
       labels: climateAverage?.map((data) => data.name),
       datasets: [
         {
-          label: "Avg Temperature (°C)",
+          label: "Avg Temperature (°C) during year",
           data: climateAverage?.map((data) => data?.absMaxTemp),
           backgroundColor: ["rgba(255, 99, 132, 1)"],
           borderWidth: 2,
@@ -29,7 +29,7 @@ const CityWeather = () => {
           hoverBorderWidth: 2,
         },
         {
-          label: "Avg Temperature (°F)",
+          label: "Avg Temperature (°F) during year",
           data: climateAverage?.map((data) => data?.absMaxTemp_F),
           backgroundColor: ["rgba(54, 162, 235, 1)"],
           borderWidth: 2,

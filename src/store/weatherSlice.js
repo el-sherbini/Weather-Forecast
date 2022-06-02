@@ -26,7 +26,7 @@ export const getCityWeather = createAsyncThunk(
   async (args) => {
     try {
       return fetch(
-        `http://api.worldweatheronline.com/premium/v1/weather.ashx?q=${args.city}&num_of_days=1&includelocation=yes&tp=3&key=80baa668310b4929a81193903222605&format=json`
+        `http://api.worldweatheronline.com/premium/v1/weather.ashx?q=${args.city}&showlocaltime=yes&includelocation=yes&tp=3&key=80baa668310b4929a81193903222605&format=json`
       ).then((res) => res.json());
     } catch (err) {
       console.log(err);
@@ -54,10 +54,13 @@ const initialState = {
   temp_C: null,
   humidity: null,
   windspeedKmph: null,
+  visibility: null,
   weatherDesc: null,
+  weatherIconUrl: null,
   hourly: null,
   sunset: null,
   sunrise: null,
+  localtime: null,
 
   city: null,
 
@@ -107,11 +110,15 @@ const weatherSlice = createSlice({
       state.humidity = action.payload.data.current_condition[0].humidity;
       state.windspeedKmph =
         action.payload.data.current_condition[0].windspeedKmph;
+      state.visibility = action.payload.data.current_condition[0].visibility;
       state.weatherDesc =
         action.payload.data.current_condition[0].weatherDesc[0].value;
+      state.weatherIconUrl =
+        action.payload.data.current_condition[0].weatherIconUrl[0].value;
       state.hourly = action.payload.data.weather[0].hourly;
-      state.sunrise = action.payload.data.weather[0].astronomy[0].sunrise;
       state.sunset = action.payload.data.weather[0].astronomy[0].sunset;
+      state.sunrise = action.payload.data.weather[0].astronomy[0].sunrise;
+      state.localtime = action.payload.data.time_zone[0].localtime;
       state.city = action.payload.data.nearest_area[0].areaName[0].value;
       state.climateAverage = action.payload.data.ClimateAverages[0].month;
     },

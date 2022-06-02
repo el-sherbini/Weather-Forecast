@@ -44,8 +44,15 @@ function LineChart({ chartData }) {
   };
 
   return (
-    <div className="w-full lg:h-72 md:h-56 sm:h-64 bg-slate-200 p-4 rounded-lg">
-      {chartData.labels && <Line data={chartData} options={options} />}
+    <div className="w-full  bg-slate-200 p-4 rounded-lg">
+      <h1 className="sm:text-2xl font-bold text-center mb-4">
+        City average temperature during year
+      </h1>
+      {chartData.labels && (
+        <div className="lg:h-72 md:h-56 sm:h-64">
+          <Line data={chartData} options={options} />
+        </div>
+      )}
     </div>
   );
 }

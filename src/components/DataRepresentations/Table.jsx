@@ -76,7 +76,14 @@ const Table = ({ cityHistoryWeather }) => {
     return table;
   };
 
-  return <div id="tableContainer"></div>;
+  return (
+    <div>
+      <h1 className="sm:text-2xl font-bold text-center mb-4">
+        City temperature last 7 days
+      </h1>
+      <div id="tableContainer"></div>
+    </div>
+  );
 };
 
 export default Table;

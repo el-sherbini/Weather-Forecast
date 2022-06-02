@@ -19,11 +19,11 @@ const Navbar = () => {
 
   return (
     <nav className="flex justify-between">
-      <Link className="sm:text-lg xl:text-2xl" to="/" onClick={handleClick}>
+      <Link className="text-xl xl:text-2xl" to="/" onClick={handleClick}>
         Weather <span className="font-bold">Forecast</span>
       </Link>
 
-      <div className="flex w-1/3 items-center">
+      <div className="flex xl:w-1/3 w-1/2 items-center">
         <select
           className="w-full rounded border border-solid border-gray-300 bg-no-repeat
           px-2 py-1 text-sm font-normal text-gray-700 transition duration-300 ease-in-out
