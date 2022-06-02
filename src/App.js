@@ -39,13 +39,13 @@ function App() {
     if (latitude && longitude) {
       dispatch(getCountry({ latitude, longitude }));
     }
-    if (country && city === undefined) {
+    if (country && city === null) {
       dispatch(getCityWeather({ city: country }));
     }
   }, [latitude, longitude, country]);
 
   return (
-    <div className="w-5/6 m-auto">
+    <div className="w-5/6 m-auto p-5">
       {isLoading ? (
         <div>Loading...</div>
       ) : (

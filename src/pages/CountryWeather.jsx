@@ -22,12 +22,16 @@ const CountryWeather = () => {
           data: hourly?.map((data) => data?.tempC),
           backgroundColor: ["#B72EF2"],
           borderWidth: 0,
+          hoverBorderColor: ["white"],
+          hoverBorderWidth: 1,
         },
         {
           label: "Temperature (°F) during day",
           data: hourly?.map((data) => data?.tempF),
           backgroundColor: [" #5C82F2"],
           borderWidth: 0,
+          hoverBorderColor: ["white"],
+          hoverBorderWidth: 1,
         },
       ],
     });

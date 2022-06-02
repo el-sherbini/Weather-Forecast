@@ -5,6 +5,43 @@ const BarChart = ({ chartData }) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    scales: {
+      y: {
+        min: 0,
+        suggestedMax: 120,
+        ticks: {
+          font: {
+            size: 10,
+          },
+        },
+      },
+      x: {
+        ticks: {
+          font: {
+            size: 10,
+          },
+        },
+      },
+    },
+    interaction: {
+      intersect: false,
+      mode: "index",
+    },
+    plugins: {
+      title: {
+        text: (ctx) => {
+          const { intersect, mode } = ctx.chart.options.interaction;
+          return "Mode: " + mode + ", intersect: " + intersect;
+        },
+      },
+      legend: {
+        labels: {
+          font: {
+            size: 10,
+          },
+        },
+      },
+    },
   };
 
   return (

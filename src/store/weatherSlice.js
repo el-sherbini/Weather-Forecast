@@ -5,7 +5,7 @@ export const getCountry = createAsyncThunk(
   async (args) => {
     try {
       return fetch(
-        `http://api.worldweatheronline.com/premium/v1/search.ashx?q=${args.latitude},${args.longitude}&num_of_results=50&key=80baa668310b4929a81193903222605&format=json`
+        `http://api.worldweatheronline.com/premium/v1/search.ashx?q=${args.latitude},${args.longitude}&popular=yes&num_of_results=50&key=80baa668310b4929a81193903222605&format=json`
       ).then((res) => res.json());
     } catch (err) {
       console.log(err);
@@ -48,12 +48,14 @@ const initialState = {
   sunset: null,
   sunrise: null,
 
-  areaName: null,
+  city: null,
   country: null,
 
   countryCities: null,
 
   climateAverage: null,
+
+  cityHistoryWeather: null,
 };
 
 const weatherSlice = createSlice({
@@ -62,7 +64,6 @@ const weatherSlice = createSlice({
   extraReducers: {
     [getCountry.pending]: (state, action) => {
       state.isLoading = true;
-      console.log(action);
     },
     [getCountry.fulfilled]: (state, action) => {
       console.log(action);
@@ -72,12 +73,10 @@ const weatherSlice = createSlice({
     },
     [getCountry.rejected]: (state, action) => {
       state.isLoading = false;
-      console.log(action);
     },
 
     [getCityWeather.pending]: (state, action) => {
       state.isLoading = true;
-      console.log(action);
     },
     [getCityWeather.fulfilled]: (state, action) => {
       console.log(action);
@@ -93,8 +92,7 @@ const weatherSlice = createSlice({
       state.sunrise = action.payload.data.weather[0].astronomy[0].sunrise;
       state.sunset = action.payload.data.weather[0].astronomy[0].sunset;
 
-      state.areaName = action.payload.data.nearest_area[0].areaName[0].value;
-      state.country = action.payload.data.nearest_area[0].country[0].value;
+      state.city = action.payload.data.nearest_area[0].areaName[0].value;
 
       state.climateAverage = action.payload.data.ClimateAverages[0].month;
     },
@@ -103,16 +101,14 @@ const weatherSlice = createSlice({
     },
 
     [getCityHistoryWeather.pending]: (state, action) => {
-      state.isLoading = true;
-      console.log(action);
+      state.isRendered = false;
     },
     [getCityHistoryWeather.fulfilled]: (state, action) => {
       console.log(action);
-      state.isLoading = false;
+      state.cityHistoryWeather = action.payload.data.weather;
     },
     [getCityHistoryWeather.rejected]: (state, action) => {
-      state.isLoading = false;
-      console.log(action);
+      state.isRendered = false;
     },
   },
 });

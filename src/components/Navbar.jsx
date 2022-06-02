@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getCityWeather } from "../store/weatherSlice";
 
 const Navbar = () => {
-  const { countryCities } = useSelector((state) => state.weather);
+  const { countryCities, country } = useSelector((state) => state.weather);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -13,9 +13,13 @@ const Navbar = () => {
     dispatch(getCityWeather({ city: e.target.value }));
   };
 
+  const handleClick = (e) => {
+    dispatch(getCityWeather({ city: country }));
+  };
+
   return (
-    <nav className="flex justify-between pt-4">
-      <Link className="sm:text-lg xl:text-2xl" to="/">
+    <nav className="flex justify-between">
+      <Link className="sm:text-lg xl:text-2xl" to="/" onClick={handleClick}>
         Weather <span className="font-bold">Forecast</span>
       </Link>
 

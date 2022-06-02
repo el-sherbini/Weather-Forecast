@@ -18,7 +18,7 @@ const WeatherData = () => {
     weatherDesc,
     sunset,
     sunrise,
-    areaName,
+    city,
     country,
   } = useSelector((state) => state.weather);
 
@@ -56,7 +56,7 @@ const WeatherData = () => {
   };
 
   return (
-    <div className="mb-20 mt-10 flex flex-row justify-around">
+    <div className="mb-10 mt-10 flex flex-row justify-around">
       <div className="items ml-6 flex flex-col items-center justify-center text-center text-4xl ">
         {weatherIcon(weatherDesc, "text-6xl")}
         <span className="mb-5">{currentDate}</span>
@@ -66,7 +66,7 @@ const WeatherData = () => {
           <span className="text-2xl ">°C</span>
         </div>
 
-        <span className="text-2xl">{`${areaName}, ${country}`}</span>
+        <span className="text-2xl">{`${city}, ${country}`}</span>
       </div>
 
       <div className="flex flex-row flex-wrap items-center justify-between">
