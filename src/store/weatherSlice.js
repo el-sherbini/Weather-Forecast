@@ -4,7 +4,7 @@ export const getLocation = createAsyncThunk(
   "weather/getLocation",
   async (args) => {
     try {
-      return fetch(`http://ip-api.com/json`).then((res) => res.json());
+      return fetch(`https://ipapi.co/json`).then((res) => res.json());
     } catch (err) {
       console.log(err);
     }
@@ -79,8 +79,8 @@ const weatherSlice = createSlice({
       state.isLoading = true;
     },
     [getLocation.fulfilled]: (state, action) => {
-      state.ip = action.payload.query;
-      state.country = action.payload.country;
+      state.ip = action.payload.ip;
+      state.country = action.payload.country_name;
     },
     [getLocation.rejected]: (state, action) => {
       console.log(action);
@@ -91,7 +91,6 @@ const weatherSlice = createSlice({
     },
     [getCities.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // state.country = action.payload.search_api.result[0].country[0].value;
       state.countryCities = action.payload.search_api.result;
     },
     [getCities.rejected]: (state, action) => {
@@ -102,6 +101,7 @@ const weatherSlice = createSlice({
       state.isLoading = true;
     },
     [getCityWeather.fulfilled]: (state, action) => {
+      console.log(action);
       state.isLoading = false;
       state.temp_C = action.payload.data.current_condition[0].temp_C;
       state.humidity = action.payload.data.current_condition[0].humidity;
