@@ -4,7 +4,10 @@ import { CountryWeather, CityWeather } from "./pages";
 import { Navbar } from "./components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getCities, getCityWeather, getLocation } from "./store/weatherSlice";
+import { getCities, getLocation } from "./store/weatherSlice";
+
+import { SpinnerDotted } from "spinners-react";
+
 import "./App.scss";
 
 function App() {
@@ -14,13 +17,19 @@ function App() {
 
   useEffect(() => {
     if (ip == null) dispatch(getLocation());
-    else dispatch(getCities({ query: ip }));
+    else
+      dispatch(
+        getCities({ query: ip, key: process.env.REACT_APP_WEATHER_API_KEY })
+      );
   }, [ip]);
 
   return (
-    <div className="w-11/12 m-auto p-5">
+    <div className="m-auto w-11/12 p-5 text-slate-700 dark:text-slate-300">
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="absolute top-1/2 left-1/2 m-auto -translate-x-1/2 -translate-y-1/2 text-center">
+          <SpinnerDotted size="80" speed="80" />
+          Loading
+        </div>
       ) : (
         <Router>
           <Navbar />

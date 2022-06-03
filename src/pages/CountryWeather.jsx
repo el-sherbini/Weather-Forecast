@@ -18,7 +18,12 @@ const CountryWeather = () => {
 
   useEffect(() => {
     if (country && city === null) {
-      dispatch(getCityWeather({ city: country }));
+      dispatch(
+        getCityWeather({
+          city: country,
+          key: process.env.REACT_APP_WEATHER_API_KEY,
+        })
+      );
     }
   }, []);
 

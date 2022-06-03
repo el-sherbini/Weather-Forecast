@@ -14,7 +14,7 @@ export const getLocation = createAsyncThunk(
 export const getCities = createAsyncThunk("weather/getCities", async (args) => {
   try {
     return fetch(
-      `http://api.worldweatheronline.com/premium/v1/search.ashx?q=${args.query}&popular=yes&num_of_results=50&key=80baa668310b4929a81193903222605&format=json`
+      `http://api.worldweatheronline.com/premium/v1/search.ashx?q=${args.query}&popular=yes&num_of_results=50&key=${args.key}&format=json`
     ).then((res) => res.json());
   } catch (err) {
     console.log(err);
@@ -26,7 +26,7 @@ export const getCityWeather = createAsyncThunk(
   async (args) => {
     try {
       return fetch(
-        `http://api.worldweatheronline.com/premium/v1/weather.ashx?q=${args.city}&showlocaltime=yes&includelocation=yes&tp=3&key=80baa668310b4929a81193903222605&format=json`
+        `http://api.worldweatheronline.com/premium/v1/weather.ashx?q=${args.city}&showlocaltime=yes&includelocation=yes&tp=3&key=${args.key}&format=json`
       ).then((res) => res.json());
     } catch (err) {
       console.log(err);
@@ -39,7 +39,7 @@ export const getCityHistoryWeather = createAsyncThunk(
   async (args) => {
     try {
       return fetch(
-        `http://api.worldweatheronline.com/premium/v1/past-weather.ashx?q=${args.city}&date=${args.startDate}&enddate=${args.endDate}&tp=1&key=80baa668310b4929a81193903222605&format=json`
+        `http://api.worldweatheronline.com/premium/v1/past-weather.ashx?q=${args.city}&date=${args.startDate}&enddate=${args.endDate}&tp=1&key=${args.key}&format=json`
       ).then((res) => res.json());
     } catch (err) {
       console.log(err);
@@ -81,7 +81,6 @@ const weatherSlice = createSlice({
     [getLocation.fulfilled]: (state, action) => {
       state.ip = action.payload.query;
       state.country = action.payload.country;
-      console.log(action);
     },
     [getLocation.rejected]: (state, action) => {
       console.log(action);
@@ -91,7 +90,6 @@ const weatherSlice = createSlice({
       state.isLoading = true;
     },
     [getCities.fulfilled]: (state, action) => {
-      console.log(action);
       state.isLoading = false;
       // state.country = action.payload.search_api.result[0].country[0].value;
       state.countryCities = action.payload.search_api.result;
@@ -104,7 +102,6 @@ const weatherSlice = createSlice({
       state.isLoading = true;
     },
     [getCityWeather.fulfilled]: (state, action) => {
-      console.log(action);
       state.isLoading = false;
       state.temp_C = action.payload.data.current_condition[0].temp_C;
       state.humidity = action.payload.data.current_condition[0].humidity;
@@ -130,7 +127,6 @@ const weatherSlice = createSlice({
       state.isRendered = false;
     },
     [getCityHistoryWeather.fulfilled]: (state, action) => {
-      console.log(action);
       state.cityHistoryWeather = action.payload.data.weather;
     },
     [getCityHistoryWeather.rejected]: (state, action) => {

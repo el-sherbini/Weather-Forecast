@@ -45,12 +45,12 @@ const BarChart = ({ chartData }) => {
   };
 
   return (
-    <div className="w-full  bg-slate-200 p-4 rounded-lg">
-      <h1 className="sm:text-2xl font-bold text-center mb-4">
+    <div className="w-full rounded-lg bg-slate-200 p-4 dark:bg-slate-800 ">
+      <h1 className="mb-4 text-center font-bold sm:text-2xl">
         City temperature during day
       </h1>
       {chartData.labels && (
-        <div className="lg:h-80 h-48">
+        <div className="h-48 lg:h-80">
           <Bar data={chartData} options={options} />
         </div>
       )}

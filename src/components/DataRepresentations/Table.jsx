@@ -1,32 +1,10 @@
 import React, { useEffect } from "react";
 import * as d3 from "d3";
-import { useDispatch, useSelector } from "react-redux";
-import { getCityHistoryWeather } from "../../store/weatherSlice";
 
 const Table = ({ cityHistoryWeather }) => {
-  // const { cityHistoryWeather, city, country } = useSelector(
-  //   (state) => state.weather
-  // );
-
-  const dispatch = useDispatch();
-
-  const today = new Date().toISOString().slice(0, 10);
-  const lastWeek = new Date();
-  lastWeek.setDate(lastWeek.getDate() - 6);
-
   const tableHeaders = ["Date", "Max Temp (°C)", "Min Temp (°C)"];
 
   useEffect(() => {
-    // if (city) {
-    //   dispatch(
-    //     getCityHistoryWeather({
-    //       city: city ? city : country,
-    //       startDate: lastWeek.toISOString().slice(0, 10),
-    //       endDate: today,
-    //     })
-    //   );
-    // }
-
     if (cityHistoryWeather)
       DrawTable(cityHistoryWeather, ["date", "maxtempC", "mintempC"]);
   }, [cityHistoryWeather]);
@@ -71,14 +49,19 @@ const Table = ({ cityHistoryWeather }) => {
         return d.value;
       });
 
-    rows.selectAll("td").attr("class", "border-y border-white p-1 text-sm");
+    rows
+      .selectAll("td")
+      .attr(
+        "class",
+        "border-y border-white p-1 text-sm dark:bg-slate-800 dark:border-slate-900"
+      );
 
     return table;
   };
 
   return (
     <div>
-      <h1 className="sm:text-2xl font-bold text-center mb-4">
+      <h1 className="mb-4 text-center font-bold sm:text-2xl">
         City temperature last 7 days
       </h1>
       <div id="tableContainer"></div>

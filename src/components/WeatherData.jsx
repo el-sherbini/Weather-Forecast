@@ -35,39 +35,39 @@ const WeatherData = () => {
 
   const weatherData = (DescTitle, DescIcon, DescValue) => {
     return (
-      <div className="flex lg:w-1/6 xl:1/5 md:w-2/5 mt-6 md:mt-0 sm:w-4/5 m-auto w-full flex-col items-center justify-center rounded-lg shadow-md px-2 py-4 xl:p-5 bg-white hover:scale-110 transition ease-in-out duration-300">
-        <span>{DescTitle}</span>
-        <DescIcon className="my-2 text-4xl" />
-        <span className="text-xl ">{DescValue}</span>
+      <div className="xl:1/5 m-auto mt-2 flex w-11/12 items-center justify-center rounded-lg bg-white shadow-md transition duration-300 ease-in-out hover:scale-110 dark:bg-slate-900 sm:mt-6 sm:w-2/5 sm:flex-col sm:px-2 sm:py-4 md:mt-0 lg:w-1/6 xl:p-5">
+        <span className="sm:text-md text-sm">{DescTitle}</span>
+        <DescIcon className="my-2 mx-2 text-lg sm:text-4xl " />
+        <span className="text-sm sm:text-lg">{DescValue}</span>
       </div>
     );
   };
 
   return (
-    <div className="bg-slate-200 p-8 my-10 rounded-lg ">
-      <h1 className="sm:text-3xl font-bold mb-8">
-        City current weather condition summary
+    <div className="my-10 rounded-lg bg-slate-200 p-8 dark:bg-slate-800">
+      <h1 className="mb-8 font-bold sm:text-2xl">
+        City current weather condition summary ({`${city},${country}`})
       </h1>
-      <div className="flex flex-col lg:flex-row justify-around items-center">
-        <div className="md:h-52 rounded overflow-hidden shadow-lg bg-white flex flex-col md:flex-row items-center w-1/2  m-auto 4/5 lg:mr-8 mb-6 lg:w-4/12">
+      <div className="flex flex-col items-center justify-around md:flex-row">
+        <div className="m-auto mb-3 flex h-40 w-4/5 flex-row items-center overflow-hidden rounded bg-white shadow-lg dark:bg-slate-900 md:mr-10 md:mb-0 md:h-72 md:w-1/3 md:flex-col lg:h-52 lg:w-1/3 lg:flex-row">
           <img
             src={weatherIconUrl}
             alt=""
-            className="md:w-1/2 w-full md:h-full"
+            className="h-full w-1/2 md:w-full lg:w-1/2"
           />
 
-          <div className="py-4 px-3 text-center w-full md:w-1/2">
-            <span className="xl:text-lg font-bold">{`${city}, ${country}`}</span>
+          <div className="w-full text-center md:w-1/2">
+            <span className="font-bold xl:text-lg">{`${city}`}</span>
             <div className="m-1 flex flex-row items-start justify-center">
-              <span className="xl:text-3xl font-medium">{temp_C}</span>
+              <span className="font-medium xl:text-3xl">{temp_C}</span>
               <span className="xl:text-lg">°C</span>
             </div>
-            <p className="xl:text-lg mb-2 ">{currentDate}</p>
+            <p className="mb-2 xl:text-lg ">{currentDate}</p>
             <p className="xl:text-lg">{convertTime(localtime)}</p>
           </div>
         </div>
 
-        <div className="flex flex-row flex-wrap items-center justify-between lg:8/12 xl:w-9/12 sm:w-full md:gap-5  ">
+        <div className="lg:8/12 flex flex-row flex-wrap items-center justify-between sm:w-full md:gap-5 xl:w-9/12  ">
           {weatherData("Humidity", WiHumidity, `${humidity} %`)}
           {weatherData("Wind Speed", RiWindyLine, `${windspeedKmph} KM/H`)}
           {/* {weatherData("Visibility", MdVisibility, `${visibility} KM`)} */}
