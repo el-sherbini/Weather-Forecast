@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import * as d3 from "d3";
 
@@ -20,7 +21,7 @@ const Table = ({ cityHistoryWeather }) => {
       );
     let thead = table
       .append("thead")
-      .attr("class", "bg-[#515ec5] text-sm text-white");
+      .attr("class", "bg-[#515ec5] text-sm text-slate-300");
     let tbody = table.append("tbody").attr("class", "bg-slate-200");
     let rows = tbody.selectAll("tr").data(data).enter().append("tr");
 

@@ -1,4 +1,3 @@
-import { MdVisibility } from "react-icons/md";
 import { RiWindyLine } from "react-icons/ri";
 import { BsSunset, BsSunrise } from "react-icons/bs";
 import { WiHumidity } from "react-icons/wi";
@@ -10,7 +9,6 @@ const WeatherData = () => {
     temp_C,
     humidity,
     windspeedKmph,
-    visibility,
     weatherIconUrl,
     sunset,
     sunrise,
