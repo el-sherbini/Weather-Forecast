@@ -14,7 +14,7 @@ export const getLocation = createAsyncThunk(
 export const getCities = createAsyncThunk("weather/getCities", async (args) => {
   try {
     return fetch(
-      `http://api.worldweatheronline.com/premium/v1/search.ashx?q=${args.query}&popular=yes&num_of_results=50&key=${args.key}&format=json`
+      `https://api.worldweatheronline.com/premium/v1/search.ashx?q=${args.query}&popular=yes&num_of_results=50&key=${args.key}&format=json`
     ).then((res) => res.json());
   } catch (err) {
     console.log(err);
@@ -26,7 +26,7 @@ export const getCityWeather = createAsyncThunk(
   async (args) => {
     try {
       return fetch(
-        `http://api.worldweatheronline.com/premium/v1/weather.ashx?q=${args.city}&showlocaltime=yes&includelocation=yes&tp=3&key=${args.key}&format=json`
+        `https://api.worldweatheronline.com/premium/v1/weather.ashx?q=${args.city}&showlocaltime=yes&includelocation=yes&tp=3&key=${args.key}&format=json`
       ).then((res) => res.json());
     } catch (err) {
       console.log(err);
@@ -39,7 +39,7 @@ export const getCityHistoryWeather = createAsyncThunk(
   async (args) => {
     try {
       return fetch(
-        `http://api.worldweatheronline.com/premium/v1/past-weather.ashx?q=${args.city}&date=${args.startDate}&enddate=${args.endDate}&tp=1&key=${args.key}&format=json`
+        `https://api.worldweatheronline.com/premium/v1/past-weather.ashx?q=${args.city}&date=${args.startDate}&enddate=${args.endDate}&tp=1&key=${args.key}&format=json`
       ).then((res) => res.json());
     } catch (err) {
       console.log(err);
