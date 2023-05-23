@@ -1,7 +1,6 @@
 # Weather-Forecast
 
 > Weather-Forecast is a task for MentorGraphics to get weather data by user's location, built with React.js, Redux, TailwindCSS.
-> Live demo [_here_](https://weather-by-location.netlify.app/).
 
 ## Installation and Setup Instructions
 
